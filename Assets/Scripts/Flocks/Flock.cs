@@ -6,10 +6,13 @@ public class Flock : MonoBehaviour
 {
 
     #region Constant Fields
+
     const float AgentDensity = 0.08f;
+
     #endregion
 
     #region Serialize Fields
+
     [SerializeField]
     private FlockAgent agentPrefab;
 
@@ -18,17 +21,21 @@ public class Flock : MonoBehaviour
 
     [SerializeField, Range(10, 500)]
     private int startingCount = 250;
+
     #endregion
 
     #region Private Fields
+
     private List<FlockAgent> flockAgents = new List<FlockAgent>();
     private float squareMaxSpeed;
     private float squareNeighbourRadius;
     private float squareAvoidanceRadius;
+
     #endregion
 
 
     #region Public Fields
+
     [Range(1f, 100f)]
     public float driveFactor = 10f;
 
@@ -41,8 +48,12 @@ public class Flock : MonoBehaviour
     [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;
 
-    public float SquareAvoidanceRadius => squareAvoidanceRadius; 
+    public float SquareAvoidanceRadius => squareAvoidanceRadius;
+
     #endregion
+
+    #region Unity Callbacks
+
     void Start()
     {
         squareMaxSpeed = maxSpeed * maxSpeed;
@@ -66,5 +77,7 @@ public class Flock : MonoBehaviour
     void Update()
     {
 
-    }
+    } 
+
+    #endregion
 }
