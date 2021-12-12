@@ -33,7 +33,6 @@ public class Flock : MonoBehaviour
 
     #endregion
 
-
     #region Public Fields
 
     [Range(1f, 100f)]
@@ -68,6 +67,7 @@ public class Flock : MonoBehaviour
                 Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
                 transform
                 );
+
             newAgent.name = "Agent " + i;
             flockAgents.Add(newAgent);
         }
@@ -76,8 +76,36 @@ public class Flock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        foreach(FlockAgent agent in flockAgents)
+        {
+            List<Transform> context = GetNearbyObjects(agent);
+            Vector2 move = flockBehaviour.CalculateMove(agent, context, this);
+            move *= driveFactor;
+            if(move.sqrMagnitude > squareMaxSpeed)
+            {
+                move = move.normalized * maxSpeed;
+            }
 
+            agent.Move(move);
+        }
     } 
 
     #endregion
+
+    private List<Transform> GetNearbyObjects(FlockAgent agent)
+    {
+        List<Transform> context = new List<Transform>();
+
+        Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighbourRadius);
+        foreach(Collider2D collider in contextColliders)
+        {
+            if(collider != agent.AgentCollider)
+            {
+                context.Add(collider.transform);
+            }
+        }
+
+        return context;
+
+    }
 }
