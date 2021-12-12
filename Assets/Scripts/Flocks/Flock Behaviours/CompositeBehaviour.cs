@@ -10,8 +10,8 @@ public class CompositeBehaviour : FlockBehaviour
     [SerializeField]
     private float[] behaviourWeights;
 
-    public FlockBehaviour[] FlockBehaviours => flockBehaviours;
-    public float[] BehaviourWeights => behaviourWeights;
+    public FlockBehaviour[] FlockBehaviours { get => flockBehaviours; set => flockBehaviours = value; }
+    public float[] BehaviourWeights { get => behaviourWeights; set => behaviourWeights = value; }
 
     public override Vector2 CalculateMove(FlockAgent flockAgent, List<Transform> context, Flock flock)
     {
