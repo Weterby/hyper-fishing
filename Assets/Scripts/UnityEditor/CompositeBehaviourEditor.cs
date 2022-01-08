@@ -24,7 +24,7 @@ public class CompositeBehaviourEditor : Editor
 
             EditorGUI.BeginChangeCheck();
 
-            for (int i = 0; i < compositeBehaviour.FlockBehaviours.Length; i++)
+            for (int i = 0; i < compositeBehaviour.FlockBehaviours.Length; i++)  
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(i.ToString(), GUILayout.MinWidth(60f), GUILayout.MaxWidth(60f));
