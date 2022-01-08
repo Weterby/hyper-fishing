@@ -9,9 +9,17 @@ public class FlockAgent : MonoBehaviour
     private Collider2D agentCollider;
     public Collider2D AgentCollider => agentCollider;
 
+    private Flock agentFlock;
+    public Flock AgentFlock => agentFlock;
+
     void Start()
     {
         agentCollider = GetComponent<Collider2D>();
+    }
+
+    public void InitializeFlock(Flock flock)
+    {
+        agentFlock = flock;
     }
 
     public void Move(Vector2 velocity)

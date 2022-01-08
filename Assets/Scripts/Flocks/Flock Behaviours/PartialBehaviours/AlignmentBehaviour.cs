@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Flock/Behaviour/Alignment")]
-public class AlignmentBehaviour : FlockBehaviour
+public class AlignmentBehaviour : FilteredFlockBehaviour
 {
     //Alignment behaviour describes how agents calculate common direction
     //based on actual direction of agents in flock.
@@ -16,7 +16,8 @@ public class AlignmentBehaviour : FlockBehaviour
             return flockAgent.transform.up;
         }
         Vector2 alignmentMove = Vector2.zero;
-        foreach (Transform item in context)
+        List<Transform> filteredContext = (contextFilter == null) ? context : contextFilter.Filter(flockAgent, context);
+        foreach (Transform item in filteredContext)
         {
             alignmentMove += (Vector2)item.transform.up;
         }
