@@ -25,7 +25,7 @@ public class CompositeBehaviour : FlockBehaviour
 
         for (int i = 0; i < flockBehaviours.Length; i++)
         {
-            Vector2 partialMove = flockBehaviours[i].CalculateMove(flockAgent, context, flock) * behaviourWeights[1];
+            Vector2 partialMove = flockBehaviours[i].CalculateMove(flockAgent, context, flock) * behaviourWeights[i];
             
             if(partialMove != Vector2.zero)
             {

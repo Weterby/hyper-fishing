@@ -35,17 +35,22 @@ public class Flock : MonoBehaviour
 
     #region Public Fields
 
-    [Range(1f, 100f)]
-    public float driveFactor = 10f;
+    [Range(1f, 100f), SerializeField]
+    private float driveFactor = 10f;
 
-    [Range(1f, 100f)]
-    public float maxSpeed = 5f;
+    [Range(1f, 100f), SerializeField]
+    private float maxSpeed = 5f;
 
-    [Range(1f, 10f)]
-    public float neighbourRadius = 1.5f;
+    [Range(1f, 10f), SerializeField]
+    private float neighbourRadius = 1.5f;
 
-    [Range(0f, 1f)]
-    public float avoidanceRadiusMultiplier = 0.5f;
+    [Range(0f, 1f), SerializeField]
+    private float avoidanceRadiusMultiplier = 0.5f;
+
+    [Range(0f, 10f), SerializeField]
+    private float obstacleRadius = 4f;
+
+    public float ObstacleRadius => obstacleRadius;
 
     public float SquareAvoidanceRadius => squareAvoidanceRadius;
 

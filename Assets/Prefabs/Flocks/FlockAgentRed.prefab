@@ -61,6 +61,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f624491bf1992f42beed92d78ea7a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directionsToCheck:
+  - {x: 0.75, y: 0.25}
+  - {x: 0.75, y: -0.25}
+  - {x: 0.8, y: 0.1}
+  - {x: 0.8, y: -0.1}
 --- !u!1 &5195795930543875656
 GameObject:
   m_ObjectHideFlags: 0

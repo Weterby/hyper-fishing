@@ -12,6 +12,10 @@ public class FlockAgent : MonoBehaviour
     private Flock agentFlock;
     public Flock AgentFlock => agentFlock;
 
+    [SerializeField]
+    private Vector2[] directionsToCheck;
+
+    public Vector2[] DirectionsToCheck => directionsToCheck;
     void Start()
     {
         agentCollider = GetComponent<Collider2D>();
@@ -27,4 +31,5 @@ public class FlockAgent : MonoBehaviour
         transform.up = velocity;
         transform.position += (Vector3)velocity * Time.deltaTime;
     }
+
 }

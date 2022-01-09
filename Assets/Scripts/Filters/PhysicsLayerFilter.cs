@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Flock/Filter/Physics Layer")]
 public class PhysicsLayerFilter : ContextFilter
 {
-    [SerializeField]
-    private LayerMask layerMask;
     public override List<Transform> Filter(FlockAgent agent, List<Transform> originalContext)
     {
         List<Transform> filteredContext = new List<Transform>();
