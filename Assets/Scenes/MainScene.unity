@@ -1224,7 +1224,7 @@ GameObject:
   - component: {fileID: 125310683}
   - component: {fileID: 125310685}
   - component: {fileID: 125310684}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4385,7 +4385,7 @@ GameObject:
   - component: {fileID: 468951354}
   - component: {fileID: 468951356}
   - component: {fileID: 468951355}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8194,12 +8194,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 9075678720071344585, guid: 24129b5c0c75d164193b2ad7dfea9d0d, type: 3}
   flockBehaviour: {fileID: 11400000, guid: 510786622c779464889bd1a3c6a4ca76, type: 2}
-  startingCount: 50
+  startingCount: 100
   driveFactor: 10
-  maxSpeed: 5
+  maxSpeed: 15
   neighbourRadius: 1.5
   avoidanceRadiusMultiplier: 0.5
-  obstacleRadius: 9.42
+  obstacleRadius: 6
 --- !u!4 &985426179
 Transform:
   m_ObjectHideFlags: 0
@@ -11845,9 +11845,9 @@ MonoBehaviour:
   startingCount: 100
   driveFactor: 10
   maxSpeed: 5
-  neighbourRadius: 1.5
+  neighbourRadius: 3
   avoidanceRadiusMultiplier: 0.5
-  obstacleRadius: 4
+  obstacleRadius: 6
 --- !u!4 &1379481297
 Transform:
   m_ObjectHideFlags: 0
@@ -12984,11 +12984,11 @@ MonoBehaviour:
   agentPrefab: {fileID: 9075678720071344585, guid: f993d564fc80a704b9709187a15f991d, type: 3}
   flockBehaviour: {fileID: 11400000, guid: 510786622c779464889bd1a3c6a4ca76, type: 2}
   startingCount: 50
-  driveFactor: 10
+  driveFactor: 2
   maxSpeed: 5
   neighbourRadius: 1.5
   avoidanceRadiusMultiplier: 0.5
-  obstacleRadius: 4
+  obstacleRadius: 6
 --- !u!4 &1493240995
 Transform:
   m_ObjectHideFlags: 0
@@ -13890,7 +13890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1610642000
 Transform:
   m_ObjectHideFlags: 0
@@ -14138,7 +14138,7 @@ GameObject:
   - component: {fileID: 1674203370}
   - component: {fileID: 1674203372}
   - component: {fileID: 1674203371}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16431,7 +16431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1899729137
 Transform:
   m_ObjectHideFlags: 0
@@ -17162,7 +17162,7 @@ GameObject:
   - component: {fileID: 1949237544}
   - component: {fileID: 1949237546}
   - component: {fileID: 1949237545}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

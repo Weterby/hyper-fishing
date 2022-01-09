@@ -12,10 +12,8 @@ public class ObstacleAvoidanceBehaviour : FilteredFlockBehaviour
     public override Vector2 CalculateMove(FlockAgent flockAgent, List<Transform> context, Flock flock)
     { 
         Vector2 obstacleAvoidanceMove = Vector2.zero;
-        RaycastHit hit;
-        if (Physics.Raycast(flockAgent.transform.position, flockAgent.transform.forward, out hit, flock.ObstacleRadius, contextFilter.layerMask))
+        if (Physics2D.Raycast(flockAgent.transform.position, flockAgent.transform.forward, flock.ObstacleRadius, contextFilter.layerMask))
         {
-            Debug.Log("dfdfd");
             obstacleAvoidanceMove = FindBestObstacleAvoidDirection(flockAgent, flock);
         }
 
@@ -24,15 +22,22 @@ public class ObstacleAvoidanceBehaviour : FilteredFlockBehaviour
 
    private Vector2 FindBestObstacleAvoidDirection(FlockAgent flockAgent, Flock flock)
    {
+        RaycastHit2D noObstaclesHit = Physics2D.Raycast(flockAgent.transform.position, flockAgent.transform.forward, flock.ObstacleRadius, contextFilter.layerMask);
+        if(noObstaclesHit.collider == null)
+        {
+            return currentObstacleAvoidDirection;
+        }
+
         float maxDistance = int.MinValue;
         Vector2 selectedDirection = Vector2.zero;
         for(int i = 0; i<flockAgent.DirectionsToCheck.Length; i++)
         {
-            RaycastHit hit;
             Vector2 currentDirection = flockAgent.transform.TransformDirection(flockAgent.DirectionsToCheck[i].normalized);
-            if (Physics.Raycast(flockAgent.transform.position, currentDirection,out hit, flock.ObstacleRadius, contextFilter.layerMask))
+
+            RaycastHit2D hit = Physics2D.Raycast(flockAgent.transform.position, currentDirection, flock.ObstacleRadius, contextFilter.layerMask);
+            if (hit.collider != null)
             {
-                float currentDistance = (hit.point - flockAgent.transform.position).sqrMagnitude;
+                float currentDistance = ((Vector3)hit.point - flockAgent.transform.position).sqrMagnitude;
                 if(currentDistance > maxDistance)
                 {
                     maxDistance = currentDistance;
@@ -43,11 +48,9 @@ public class ObstacleAvoidanceBehaviour : FilteredFlockBehaviour
             {
                 selectedDirection = currentDirection;
                 currentObstacleAvoidDirection = currentDirection.normalized;
-                Debug.Log(selectedDirection.normalized);
                 return selectedDirection.normalized;
             }
         }
-        Debug.Log(selectedDirection.normalized);
         return selectedDirection.normalized;
     }
 }
