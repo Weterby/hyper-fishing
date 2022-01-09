@@ -32,4 +32,8 @@ public class FlockAgent : MonoBehaviour
         transform.position += (Vector3)velocity * Time.deltaTime;
     }
 
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, transform.forward, Color.red);
+    }
 }

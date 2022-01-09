@@ -12,6 +12,7 @@ public class ObstacleAvoidanceBehaviour : FilteredFlockBehaviour
     public override Vector2 CalculateMove(FlockAgent flockAgent, List<Transform> context, Flock flock)
     { 
         Vector2 obstacleAvoidanceMove = Vector2.zero;
+        
         if (Physics2D.Raycast(flockAgent.transform.position, flockAgent.transform.forward, flock.ObstacleRadius, contextFilter.layerMask))
         {
             obstacleAvoidanceMove = FindBestObstacleAvoidDirection(flockAgent, flock);
@@ -22,10 +23,13 @@ public class ObstacleAvoidanceBehaviour : FilteredFlockBehaviour
 
    private Vector2 FindBestObstacleAvoidDirection(FlockAgent flockAgent, Flock flock)
    {
-        RaycastHit2D noObstaclesHit = Physics2D.Raycast(flockAgent.transform.position, flockAgent.transform.forward, flock.ObstacleRadius, contextFilter.layerMask);
-        if(noObstaclesHit.collider == null)
+        if(currentObstacleAvoidDirection != Vector2.zero)
         {
-            return currentObstacleAvoidDirection;
+            RaycastHit2D noObstaclesHit = Physics2D.Raycast(flockAgent.transform.position, flockAgent.transform.forward, flock.ObstacleRadius, contextFilter.layerMask);
+            if (noObstaclesHit.collider == null)
+            {
+                return currentObstacleAvoidDirection;
+            }
         }
 
         float maxDistance = int.MinValue;
