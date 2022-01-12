@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerRigidbody;
 
     private float verticalAxisInput;
+    private float horizontalAxisInput;
     private Vector2 directionToMove;
 
 
@@ -21,38 +22,45 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        GetInput();
-        if (!IsAnyInput())
+        GetMoveInput();
+        GetRotateInput();
+        if (!IsAnyMoveInput())
         {
             return;
         }
-
         DesignateDirection();
     }
 
     private void FixedUpdate()
     {
         ApplyMovement();
+        ApplyRotation();
     }
 
-    private bool IsAnyInput()
+    private bool IsAnyMoveInput()
     {
         return verticalAxisInput >= float.Epsilon;
     }
 
-    private void GetInput()
+    private void GetMoveInput()
     {
         verticalAxisInput = Input.GetAxisRaw("Vertical");
     }
 
+    private void GetRotateInput()
+    {
+        horizontalAxisInput = Input.GetAxisRaw("Horizontal");
+    }
+
     private void DesignateDirection()
     {
-        directionToMove = new Vector2(0,verticalAxisInput);
+        Vector2 newDirection = new Vector2(0,verticalAxisInput).normalized;
+        directionToMove = transform.TransformDirection(newDirection).normalized;
     }
 
     private void ApplyMovement()
     {
-        if (IsAnyInput())
+        if (IsAnyMoveInput())
         {
             movementConfiguration.Accelerate();
         }
@@ -62,6 +70,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         playerRigidbody.velocity = directionToMove * movementConfiguration.CurrentSpeed;
+    }
+
+    private void ApplyRotation()
+    {
+        movementConfiguration.Rotate(-horizontalAxisInput);
+
+        transform.Rotate(transform.forward, movementConfiguration.CurrentAngle);
     }
 
     private void GetReferences()

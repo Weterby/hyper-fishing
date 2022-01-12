@@ -17,12 +17,14 @@ public class PlayerMovementConfiguration : ScriptableObject
     private float decelerationRate = 150f;
 
     private float currentSpeed;
+    private float currentAngle;
 
     public float MaximumSpeed => maximumSpeed;
     public float RotateSpeed => rotateSpeed;
     public float DecelerationRate => decelerationRate;
     public float AccelerationRate => accelerationRate;
     public float CurrentSpeed => currentSpeed;
+    public float CurrentAngle => currentAngle;
 
     public void Accelerate()
     {
@@ -33,9 +35,19 @@ public class PlayerMovementConfiguration : ScriptableObject
     {
         SetPlayerSpeed(currentSpeed - decelerationRate * Time.deltaTime);
     }
+    public void Rotate(float rotateDirection)
+    {
+        SetPlayerAngle(rotateDirection * rotateSpeed * Time.deltaTime);
+    }
 
     private void SetPlayerSpeed(float speed)
     {
         currentSpeed = Mathf.Clamp(speed, initialSpeed, maximumSpeed);
+    }
+
+
+    private void SetPlayerAngle(float angle)
+    {
+        currentAngle = angle;
     }
 }
