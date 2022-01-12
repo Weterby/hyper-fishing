@@ -84,6 +84,12 @@ public class Flock : MonoBehaviour
     {
         foreach(FlockAgent agent in flockAgents)
         {
+            if(agent == null)
+            {
+                DeleteDestroyedAgent(agent);
+                return;
+            }
+
             List<Transform> context = GetNearbyObjects(agent);
             Vector2 move = flockBehaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
@@ -113,5 +119,10 @@ public class Flock : MonoBehaviour
 
         return context;
 
+    }
+
+    private void DeleteDestroyedAgent(FlockAgent destroyedAgent)
+    {
+        flockAgents.Remove(destroyedAgent);
     }
 }
