@@ -89,7 +89,7 @@ public class Flock : MonoBehaviour
                 DeleteDestroyedAgent(agent);
                 return;
             }
-
+            
             List<Transform> context = GetNearbyObjects(agent);
             Vector2 move = flockBehaviour.CalculateMove(agent, context, this);
             move *= driveFactor;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4514673856163231914}
   - component: {fileID: 2145121806727479732}
   - component: {fileID: 9075678720071344585}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlockAgentRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3073039012254924487}
   - component: {fileID: 2572568649635685654}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FlockAgentSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
