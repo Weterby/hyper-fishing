@@ -50,6 +50,8 @@ public class Flock : MonoBehaviour
     [Range(0f, 10f), SerializeField]
     private float obstacleRadius = 4f;
 
+    [SerializeField] 
+    private Transform spawnPosition;
     public float ObstacleRadius => obstacleRadius;
 
     public float SquareAvoidanceRadius => squareAvoidanceRadius;
@@ -68,7 +70,7 @@ public class Flock : MonoBehaviour
         {
             FlockAgent newAgent = Instantiate(
                 agentPrefab,
-                Random.insideUnitCircle * startingCount * AgentDensity,
+                spawnPosition.position,
                 Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
                 transform
                 );
