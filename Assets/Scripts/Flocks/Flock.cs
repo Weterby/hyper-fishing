@@ -8,7 +8,43 @@ public class Flock : MonoBehaviour
     private const float AgentDensity = 0.08f;
 
     #endregion
+    #region Serialize Fields
 
+    [SerializeField] private FlockAgent agentPrefab;
+
+    [SerializeField] private FlockBehaviour flockBehaviour;
+
+    [SerializeField] [Range(10, 500)] private int startingCount = 250;
+    
+    [Range(1f, 100f)] [SerializeField] private float driveFactor = 10f;
+
+    [Range(1f, 100f)] [SerializeField] private float maxSpeed = 5f;
+
+    [Range(1f, 10f)] [SerializeField] private float neighbourRadius = 1.5f;
+
+    [Range(0f, 1f)] [SerializeField] private float avoidanceRadiusMultiplier = 0.5f;
+
+    [Range(0f, 10f)] [SerializeField] private float obstacleRadius = 4f;
+
+    [SerializeField] private Transform[] spawnPoints;
+
+    #endregion
+
+    #region Private Fields
+
+    private readonly List<FlockAgent> flockAgents = new List<FlockAgent>();
+    private float squareMaxSpeed;
+    private float squareNeighbourRadius;
+
+    #endregion
+
+    #region Public Fields
+
+    public float ObstacleRadius => obstacleRadius;
+
+    public float SquareAvoidanceRadius { get; private set; }
+
+    #endregion
     private List<Transform> GetNearbyObjects(FlockAgent agent)
     {
         var context = new List<Transform>();
@@ -26,43 +62,7 @@ public class Flock : MonoBehaviour
         flockAgents.Remove(destroyedAgent);
     }
 
-    #region Serialize Fields
-
-    [SerializeField] private FlockAgent agentPrefab;
-
-    [SerializeField] private FlockBehaviour flockBehaviour;
-
-    [SerializeField] [Range(10, 500)] private int startingCount = 250;
-
-    #endregion
-
-    #region Private Fields
-
-    private readonly List<FlockAgent> flockAgents = new List<FlockAgent>();
-    private float squareMaxSpeed;
-    private float squareNeighbourRadius;
-
-    #endregion
-
-    #region Public Fields
-
-    [Range(1f, 100f)] [SerializeField] private float driveFactor = 10f;
-
-    [Range(1f, 100f)] [SerializeField] private float maxSpeed = 5f;
-
-    [Range(1f, 10f)] [SerializeField] private float neighbourRadius = 1.5f;
-
-    [Range(0f, 1f)] [SerializeField] private float avoidanceRadiusMultiplier = 0.5f;
-
-    [Range(0f, 10f)] [SerializeField] private float obstacleRadius = 4f;
-
-    [SerializeField] private Transform spawnPosition;
-
-    public float ObstacleRadius => obstacleRadius;
-
-    public float SquareAvoidanceRadius { get; private set; }
-
-    #endregion
+    
 
     #region Unity Callbacks
 
@@ -74,9 +74,10 @@ public class Flock : MonoBehaviour
 
         for (var i = 0; i < startingCount; i++)
         {
+            int random = Random.Range(0, spawnPoints.Length);
             var newAgent = Instantiate(
                 agentPrefab,
-                spawnPosition.position,
+                spawnPoints[random].position,
                 Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
                 transform
             );
