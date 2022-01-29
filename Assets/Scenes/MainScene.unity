@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1939488767}
-  scoreData: {fileID: 0}
+  scoreData: {fileID: 11400000, guid: e69e7aaede516834896db967f4d499af, type: 2}
 --- !u!114 &72325568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1608,6 +1608,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 771213050, guid: 9f2b0c4641a844c46a88e0d39409aa90, type: 3}
+      propertyPath: scoreData
+      value: 
+      objectReference: {fileID: 11400000, guid: e69e7aaede516834896db967f4d499af, type: 2}
     - target: {fileID: 6534112202893663751, guid: 9f2b0c4641a844c46a88e0d39409aa90, type: 3}
       propertyPath: m_Name
       value: Boat
