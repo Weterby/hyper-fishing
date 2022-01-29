@@ -1,79 +1,85 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Flock : MonoBehaviour
 {
-
     #region Constant Fields
 
-    const float AgentDensity = 0.08f;
+    private const float AgentDensity = 0.08f;
 
     #endregion
 
+    private List<Transform> GetNearbyObjects(FlockAgent agent)
+    {
+        var context = new List<Transform>();
+
+        var contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighbourRadius);
+        foreach (var collider in contextColliders)
+            if (collider != agent.AgentCollider)
+                context.Add(collider.transform);
+
+        return context;
+    }
+
+    private void DeleteDestroyedAgent(FlockAgent destroyedAgent)
+    {
+        flockAgents.Remove(destroyedAgent);
+    }
+
     #region Serialize Fields
 
-    [SerializeField]
-    private FlockAgent agentPrefab;
+    [SerializeField] private FlockAgent agentPrefab;
 
-    [SerializeField]
-    private FlockBehaviour flockBehaviour;
+    [SerializeField] private FlockBehaviour flockBehaviour;
 
-    [SerializeField, Range(10, 500)]
-    private int startingCount = 250;
+    [SerializeField] [Range(10, 500)] private int startingCount = 250;
 
     #endregion
 
     #region Private Fields
 
-    private List<FlockAgent> flockAgents = new List<FlockAgent>();
+    private readonly List<FlockAgent> flockAgents = new List<FlockAgent>();
     private float squareMaxSpeed;
     private float squareNeighbourRadius;
-    private float squareAvoidanceRadius;
 
     #endregion
 
     #region Public Fields
 
-    [Range(1f, 100f), SerializeField]
-    private float driveFactor = 10f;
+    [Range(1f, 100f)] [SerializeField] private float driveFactor = 10f;
 
-    [Range(1f, 100f), SerializeField]
-    private float maxSpeed = 5f;
+    [Range(1f, 100f)] [SerializeField] private float maxSpeed = 5f;
 
-    [Range(1f, 10f), SerializeField]
-    private float neighbourRadius = 1.5f;
+    [Range(1f, 10f)] [SerializeField] private float neighbourRadius = 1.5f;
 
-    [Range(0f, 1f), SerializeField]
-    private float avoidanceRadiusMultiplier = 0.5f;
+    [Range(0f, 1f)] [SerializeField] private float avoidanceRadiusMultiplier = 0.5f;
 
-    [Range(0f, 10f), SerializeField]
-    private float obstacleRadius = 4f;
+    [Range(0f, 10f)] [SerializeField] private float obstacleRadius = 4f;
 
-    [SerializeField] 
-    private Transform spawnPosition;
+    [SerializeField] private Transform spawnPosition;
+
     public float ObstacleRadius => obstacleRadius;
 
-    public float SquareAvoidanceRadius => squareAvoidanceRadius;
+    public float SquareAvoidanceRadius { get; private set; }
 
     #endregion
 
     #region Unity Callbacks
 
-    void Start()
+    private void Start()
     {
         squareMaxSpeed = maxSpeed * maxSpeed;
         squareNeighbourRadius = neighbourRadius * neighbourRadius;
-        squareAvoidanceRadius = squareNeighbourRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier;
+        SquareAvoidanceRadius = squareNeighbourRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier;
 
-        for (int i = 0; i < startingCount; i++)
+        for (var i = 0; i < startingCount; i++)
         {
-            FlockAgent newAgent = Instantiate(
+            var newAgent = Instantiate(
                 agentPrefab,
                 spawnPosition.position,
                 Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
                 transform
-                );
+            );
 
             newAgent.name = "Agent " + i;
             newAgent.InitializeFlock(this);
@@ -82,49 +88,24 @@ public class Flock : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        foreach(FlockAgent agent in flockAgents)
+        foreach (var agent in flockAgents)
         {
-            if(agent == null)
+            if (agent == null)
             {
                 DeleteDestroyedAgent(agent);
                 return;
             }
-            
-            List<Transform> context = GetNearbyObjects(agent);
-            Vector2 move = flockBehaviour.CalculateMove(agent, context, this);
+
+            var context = GetNearbyObjects(agent);
+            var move = flockBehaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
-            if(move.sqrMagnitude > squareMaxSpeed)
-            {
-                move = move.normalized * maxSpeed;
-            }
+            if (move.sqrMagnitude > squareMaxSpeed) move = move.normalized * maxSpeed;
 
             agent.Move(move);
         }
-    } 
+    }
 
     #endregion
-
-    private List<Transform> GetNearbyObjects(FlockAgent agent)
-    {
-        List<Transform> context = new List<Transform>();
-
-        Collider2D[] contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighbourRadius);
-        foreach(Collider2D collider in contextColliders)
-        {
-            if(collider != agent.AgentCollider)
-            {
-                context.Add(collider.transform);
-            }
-        }
-
-        return context;
-
-    }
-
-    private void DeleteDestroyedAgent(FlockAgent destroyedAgent)
-    {
-        flockAgents.Remove(destroyedAgent);
-    }
 }

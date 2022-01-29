@@ -10,9 +10,9 @@ public class SmoothFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, playerPosition.position, moveSpeed * Time.deltaTime);
+        var smoothedPosition = Vector3.Lerp(transform.position, playerPosition.position, moveSpeed * Time.deltaTime);
 
         transform.position = smoothedPosition + offset;
-        transform.rotation = Quaternion.Lerp(transform.rotation,playerPosition.rotation, rotateSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, playerPosition.rotation, rotateSpeed * Time.deltaTime);
     }
 }
