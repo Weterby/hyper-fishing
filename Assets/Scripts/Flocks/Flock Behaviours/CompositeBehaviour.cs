@@ -26,8 +26,6 @@ public class CompositeBehaviour : FlockBehaviour
     {
         if (behaviourWeights.Length != flockBehaviours.Length)
         {
-            Debug.LogError($"Data mismatch in {name}", this);
-
             return Vector2.zero;
         }
 
