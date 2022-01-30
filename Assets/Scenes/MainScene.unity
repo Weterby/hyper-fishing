@@ -16173,6 +16173,10 @@ PrefabInstance:
       propertyPath: scoreData
       value: 
       objectReference: {fileID: 11400000, guid: e69e7aaede516834896db967f4d499af, type: 2}
+    - target: {fileID: 4778903252126805410, guid: 9f2b0c4641a844c46a88e0d39409aa90, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6534112202893663751, guid: 9f2b0c4641a844c46a88e0d39409aa90, type: 3}
       propertyPath: m_Name
       value: Boat
