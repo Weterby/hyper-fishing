@@ -1,12 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnviroRotation : MonoBehaviour
 {
-    [SerializeField] private Camera playerCamera;
+    #region Serialized Fields
+
+    [SerializeField]
+    private Camera playerCamera;
+
+    #endregion
+
+    #region Private Fields
+
     private Transform objectTransform;
+
+    #endregion
+
+    #region Unity Callbacks
+
     private void Awake()
     {
         objectTransform = GetComponent<Transform>();
@@ -16,4 +26,6 @@ public class EnviroRotation : MonoBehaviour
     {
         objectTransform.rotation = playerCamera.transform.rotation;
     }
+
+    #endregion
 }

@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class FilteredFlockBehaviour : FlockBehaviour
 {
+    #region Serialized Fields
+
     [SerializeField]
     protected ContextFilter contextFilter;
+
+    #endregion
 }

@@ -2,7 +2,14 @@ using UnityEngine;
 
 public class FishCollector : MonoBehaviour
 {
-    [SerializeField] private ScoreData scoreData;
+    #region Serialized Fields
+
+    [SerializeField]
+    private ScoreData scoreData;
+
+    #endregion
+
+    #region Unity Callbacks
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,4 +19,6 @@ public class FishCollector : MonoBehaviour
             scoreData.Score++;
         }
     }
+
+    #endregion
 }

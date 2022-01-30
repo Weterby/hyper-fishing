@@ -3,30 +3,34 @@ using UnityEngine;
 
 public class Flock : MonoBehaviour
 {
-    #region Constant Fields
+    #region Serialized Fields
 
-    private const float AgentDensity = 0.08f;
+    [SerializeField]
+    private FlockAgent agentPrefab;
 
-    #endregion
-    #region Serialize Fields
+    [SerializeField]
+    private FlockBehaviour flockBehaviour;
 
-    [SerializeField] private FlockAgent agentPrefab;
+    [SerializeField, Range(10, 500)] 
+    private int startingCount = 250;
 
-    [SerializeField] private FlockBehaviour flockBehaviour;
+    [Range(1f, 100f), SerializeField] 
+    private float driveFactor = 10f;
 
-    [SerializeField] [Range(10, 500)] private int startingCount = 250;
-    
-    [Range(1f, 100f)] [SerializeField] private float driveFactor = 10f;
+    [Range(1f, 100f), SerializeField] 
+    private float maxSpeed = 5f;
 
-    [Range(1f, 100f)] [SerializeField] private float maxSpeed = 5f;
+    [Range(1f, 10f), SerializeField] 
+    private float neighbourRadius = 1.5f;
 
-    [Range(1f, 10f)] [SerializeField] private float neighbourRadius = 1.5f;
+    [Range(0f, 1f), SerializeField] 
+    private float avoidanceRadiusMultiplier = 0.5f;
 
-    [Range(0f, 1f)] [SerializeField] private float avoidanceRadiusMultiplier = 0.5f;
+    [Range(0f, 10f), SerializeField] 
+    private float obstacleRadius = 4f;
 
-    [Range(0f, 10f)] [SerializeField] private float obstacleRadius = 4f;
-
-    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField]
+    private Transform[] spawnPoints;
 
     #endregion
 
@@ -38,31 +42,19 @@ public class Flock : MonoBehaviour
 
     #endregion
 
-    #region Public Fields
+    #region Constants
+
+    private const float AgentDensity = 0.08f;
+
+    #endregion
+
+    #region Public Properties
 
     public float ObstacleRadius => obstacleRadius;
 
     public float SquareAvoidanceRadius { get; private set; }
 
     #endregion
-    private List<Transform> GetNearbyObjects(FlockAgent agent)
-    {
-        var context = new List<Transform>();
-
-        var contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighbourRadius);
-        foreach (var collider in contextColliders)
-            if (collider != agent.AgentCollider)
-                context.Add(collider.transform);
-
-        return context;
-    }
-
-    private void DeleteDestroyedAgent(FlockAgent destroyedAgent)
-    {
-        flockAgents.Remove(destroyedAgent);
-    }
-
-    
 
     #region Unity Callbacks
 
@@ -75,12 +67,7 @@ public class Flock : MonoBehaviour
         for (var i = 0; i < startingCount; i++)
         {
             int random = Random.Range(0, spawnPoints.Length);
-            var newAgent = Instantiate(
-                agentPrefab,
-                spawnPoints[random].position,
-                Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
-                transform
-            );
+            var newAgent = Instantiate(agentPrefab, spawnPoints[random].position, Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)), transform);
 
             newAgent.name = "Agent " + i;
             newAgent.InitializeFlock(this);
@@ -96,16 +83,47 @@ public class Flock : MonoBehaviour
             if (agent == null)
             {
                 DeleteDestroyedAgent(agent);
+
                 return;
             }
 
             var context = GetNearbyObjects(agent);
             var move = flockBehaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
-            if (move.sqrMagnitude > squareMaxSpeed) move = move.normalized * maxSpeed;
+
+            if (move.sqrMagnitude > squareMaxSpeed)
+            {
+                move = move.normalized * maxSpeed;
+            }
 
             agent.Move(move);
         }
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private List<Transform> GetNearbyObjects(FlockAgent agent)
+    {
+        var context = new List<Transform>();
+
+        var contextColliders = Physics2D.OverlapCircleAll(agent.transform.position, neighbourRadius);
+
+        foreach (var collider in contextColliders)
+        {
+            if (collider != agent.AgentCollider)
+            {
+                context.Add(collider.transform);
+            }
+        }
+
+        return context;
+    }
+
+    private void DeleteDestroyedAgent(FlockAgent destroyedAgent)
+    {
+        flockAgents.Remove(destroyedAgent);
     }
 
     #endregion

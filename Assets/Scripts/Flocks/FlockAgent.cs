@@ -1,25 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class FlockAgent : MonoBehaviour
 {
-
-    private Collider2D agentCollider;
-    public Collider2D AgentCollider => agentCollider;
-
-    private Flock agentFlock;
-    public Flock AgentFlock => agentFlock;
+    #region Serialized Fields
 
     [SerializeField]
     private Vector2[] directionsToCheck;
 
+    #endregion
+
+    #region Private Fields
+
+    private Collider2D agentCollider;
+
+    private Flock agentFlock;
+
+    #endregion
+
+    #region Public Properties
+
+    public Collider2D AgentCollider => agentCollider;
+    public Flock AgentFlock => agentFlock;
+
     public Vector2[] DirectionsToCheck => directionsToCheck;
-    void Start()
+
+    #endregion
+
+    #region Unity Callbacks
+
+    private void Start()
     {
         agentCollider = GetComponent<Collider2D>();
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void InitializeFlock(Flock flock)
     {
@@ -29,6 +46,8 @@ public class FlockAgent : MonoBehaviour
     public void Move(Vector2 velocity)
     {
         transform.up = velocity;
-        transform.position += (Vector3)velocity * Time.deltaTime;
+        transform.position += (Vector3) velocity * Time.deltaTime;
     }
+
+    #endregion
 }

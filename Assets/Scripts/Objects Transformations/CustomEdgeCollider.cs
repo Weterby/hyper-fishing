@@ -3,8 +3,14 @@ using UnityEngine;
 
 public class CustomEdgeCollider : MonoBehaviour
 {
+    #region Private Fields
+
     private EdgeCollider2D edgeCollider;
     private PolygonCollider2D polygonCollider;
+
+    #endregion
+
+    #region Unity Callbacks
 
     private void Awake()
     {
@@ -17,18 +23,28 @@ public class CustomEdgeCollider : MonoBehaviour
         RemovePreviousCollider();
     }
 
+    #endregion
+
+    #region Private Methods
+
     private void GetReferences()
     {
         polygonCollider = GetComponent<PolygonCollider2D>();
 
-        if (polygonCollider == null) polygonCollider = gameObject.AddComponent<PolygonCollider2D>();
+        if (polygonCollider == null)
+        {
+            polygonCollider = gameObject.AddComponent<PolygonCollider2D>();
+        }
     }
 
     private void SwapColliderPoints()
     {
         var colliderPoints = new List<Vector2>();
 
-        foreach (var point in polygonCollider.points) colliderPoints.Add(point);
+        foreach (var point in polygonCollider.points)
+        {
+            colliderPoints.Add(point);
+        }
 
         colliderPoints.Add(new Vector2(colliderPoints[0].x, colliderPoints[0].y));
 
@@ -40,4 +56,6 @@ public class CustomEdgeCollider : MonoBehaviour
     {
         Destroy(polygonCollider);
     }
+
+    #endregion
 }

@@ -2,11 +2,21 @@ using UnityEngine;
 
 public class SmoothFollow : MonoBehaviour
 {
-    [SerializeField] private Transform playerPosition;
+    #region Serialized Fields
 
-    [SerializeField] private Vector3 offset;
-    [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float rotateSpeed = 10f;
+    [SerializeField]
+    private Transform playerPosition;
+
+    [SerializeField]
+    private Vector3 offset;
+    [SerializeField]
+    private float moveSpeed = 10f;
+    [SerializeField]
+    private float rotateSpeed = 10f;
+
+    #endregion
+
+    #region Unity Callbacks
 
     private void FixedUpdate()
     {
@@ -15,4 +25,6 @@ public class SmoothFollow : MonoBehaviour
         transform.position = smoothedPosition + offset;
         transform.rotation = Quaternion.Lerp(transform.rotation, playerPosition.rotation, rotateSpeed * Time.deltaTime);
     }
+
+    #endregion
 }

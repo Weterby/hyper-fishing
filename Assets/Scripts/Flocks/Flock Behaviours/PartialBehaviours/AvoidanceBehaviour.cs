@@ -1,13 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Flock/Behaviour/Avoidance")]
 public class AvoidanceBehaviour : FilteredFlockBehaviour
 {
-    //Avoidance behaviour describes how agents move away from others
-    //trying to keep constant distance to avoid high density in flock group
-    //When there are no neighbours within agent radius, dont modify movement
+    #region Public Methods
+
     public override Vector2 CalculateMove(FlockAgent flockAgent, List<Transform> context, Flock flock)
     {
         if (context.Count == 0)
@@ -17,17 +15,18 @@ public class AvoidanceBehaviour : FilteredFlockBehaviour
 
         Vector2 avoidanceMove = Vector2.zero;
         int nAvoid = 0;
-        List<Transform> filteredContext = (contextFilter == null) ? context : contextFilter.Filter(flockAgent, context);
+        List<Transform> filteredContext = contextFilter == null ? context : contextFilter.Filter(flockAgent, context);
+
         foreach (Transform item in filteredContext)
         {
-            if(Vector2.SqrMagnitude(item.position - flockAgent.transform.position) < flock.SquareAvoidanceRadius)
+            if (Vector2.SqrMagnitude(item.position - flockAgent.transform.position) < flock.SquareAvoidanceRadius)
             {
                 nAvoid++;
-                avoidanceMove += (Vector2)(flockAgent.transform.position-item.position);
+                avoidanceMove += (Vector2) (flockAgent.transform.position - item.position);
             }
         }
 
-        if(nAvoid > 0)
+        if (nAvoid > 0)
         {
             avoidanceMove /= nAvoid;
         }
@@ -35,4 +34,5 @@ public class AvoidanceBehaviour : FilteredFlockBehaviour
         return avoidanceMove;
     }
 
+    #endregion
 }

@@ -3,16 +3,34 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Text scoreText;
-    [SerializeField] private ScoreData scoreData;
-    [SerializeField] private GameObject menuPanel;
-    private bool menuVisible = false;
+    #region Serialized Fields
+
+    [SerializeField]
+    private Text scoreText;
+    [SerializeField]
+    private ScoreData scoreData;
+    [SerializeField]
+    private GameObject menuPanel;
+
+    #endregion
+
+    #region Private Fields
+
+    private bool menuVisible;
+
+    #endregion
+
+    #region Unity Callbacks
+
     private void Update()
     {
         scoreText.text = scoreData.Score.ToString("000");
 
-        if (!Input.GetKeyDown(KeyCode.Escape)) return;
-        
+        if (!Input.GetKeyDown(KeyCode.Escape))
+        {
+            return;
+        }
+
         if (!menuVisible)
         {
             ShowMenu();
@@ -22,6 +40,10 @@ public class UIManager : MonoBehaviour
             CloseMenu();
         }
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void ShowMenu()
     {
@@ -41,4 +63,6 @@ public class UIManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    #endregion
 }

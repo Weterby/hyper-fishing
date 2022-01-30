@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(CompositeBehaviour))]
 public class CompositeBehaviourEditor : Editor
 {
+    #region Public Methods
+
     public override void OnInspectorGUI()
     {
-        CompositeBehaviour compositeBehaviour = (CompositeBehaviour)target;
+        CompositeBehaviour compositeBehaviour = (CompositeBehaviour) target;
 
-        if(compositeBehaviour.FlockBehaviours == null || compositeBehaviour.FlockBehaviours.Length == 0)
+        if (compositeBehaviour.FlockBehaviours == null || compositeBehaviour.FlockBehaviours.Length == 0)
         {
             EditorGUILayout.HelpBox("No behaviours in list.", MessageType.Warning);
         }
@@ -24,11 +24,11 @@ public class CompositeBehaviourEditor : Editor
 
             EditorGUI.BeginChangeCheck();
 
-            for (int i = 0; i < compositeBehaviour.FlockBehaviours.Length; i++)  
+            for (int i = 0; i < compositeBehaviour.FlockBehaviours.Length; i++)
             {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(i.ToString(), GUILayout.MinWidth(60f), GUILayout.MaxWidth(60f));
-                compositeBehaviour.FlockBehaviours[i] = (FlockBehaviour)EditorGUILayout.ObjectField(compositeBehaviour.FlockBehaviours[i], typeof(FlockBehaviour), false, GUILayout.MinWidth(60f));
+                compositeBehaviour.FlockBehaviours[i] = (FlockBehaviour) EditorGUILayout.ObjectField(compositeBehaviour.FlockBehaviours[i], typeof(FlockBehaviour), false, GUILayout.MinWidth(60f));
                 compositeBehaviour.BehaviourWeights[i] = EditorGUILayout.FloatField(compositeBehaviour.BehaviourWeights[i], GUILayout.MinWidth(60f), GUILayout.MaxWidth(60f));
                 EditorGUILayout.EndHorizontal();
             }
@@ -37,12 +37,12 @@ public class CompositeBehaviourEditor : Editor
             {
                 EditorUtility.SetDirty(compositeBehaviour);
             }
-
         }
 
         GUILayout.Space(10f);
 
         EditorGUILayout.BeginVertical();
+
         if (GUILayout.Button("Add behaviour"))
         {
             AddBehaviour(compositeBehaviour);
@@ -56,14 +56,20 @@ public class CompositeBehaviourEditor : Editor
             RemoveBehaviour(compositeBehaviour);
             EditorUtility.SetDirty(compositeBehaviour);
         }
+
         EditorGUILayout.EndVertical();
     }
 
+    #endregion
+
+    #region Private Methods
+
     private void AddBehaviour(CompositeBehaviour compositeBehaviour)
     {
-        int oldCount = (compositeBehaviour != null) ? compositeBehaviour.FlockBehaviours.Length : 0;
+        int oldCount = compositeBehaviour != null ? compositeBehaviour.FlockBehaviours.Length : 0;
         FlockBehaviour[] newBehaviours = new FlockBehaviour[oldCount + 1];
         float[] newWeights = new float[oldCount + 1];
+
         for (int i = 0; i < oldCount; i++)
         {
             newBehaviours[i] = compositeBehaviour.FlockBehaviours[i];
@@ -78,16 +84,18 @@ public class CompositeBehaviourEditor : Editor
     private void RemoveBehaviour(CompositeBehaviour compositeBehaviour)
     {
         int oldCount = compositeBehaviour.FlockBehaviours.Length;
-        
-        if(oldCount == 1)
+
+        if (oldCount == 1)
         {
             compositeBehaviour.FlockBehaviours = null;
             compositeBehaviour.BehaviourWeights = null;
+
             return;
         }
 
         FlockBehaviour[] newBehaviours = new FlockBehaviour[oldCount - 1];
         float[] newWeights = new float[oldCount - 1];
+
         for (int i = 0; i < oldCount - 1; i++)
         {
             newBehaviours[i] = compositeBehaviour.FlockBehaviours[i];
@@ -97,4 +105,6 @@ public class CompositeBehaviourEditor : Editor
         compositeBehaviour.FlockBehaviours = newBehaviours;
         compositeBehaviour.BehaviourWeights = newWeights;
     }
+
+    #endregion
 }

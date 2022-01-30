@@ -2,15 +2,26 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private PlayerMovementConfiguration movementConfiguration;
+    #region Serialized Fields
 
-    [SerializeField] private Rigidbody2D playerRigidbody;
+    [SerializeField]
+    private PlayerMovementConfiguration movementConfiguration;
+
+    [SerializeField]
+    private Rigidbody2D playerRigidbody;
+
+    #endregion
+
+    #region Private Fields
 
     private Vector2 directionToMove;
     private float horizontalAxisInput;
 
     private float verticalAxisInput;
 
+    #endregion
+
+    #region Unity Callbacks
 
     private void Start()
     {
@@ -21,7 +32,12 @@ public class PlayerMovement : MonoBehaviour
     {
         GetMoveInput();
         GetRotateInput();
-        if (!IsAnyMoveInput()) return;
+
+        if (!IsAnyMoveInput())
+        {
+            return;
+        }
+
         DesignateDirection();
     }
 
@@ -30,6 +46,10 @@ public class PlayerMovement : MonoBehaviour
         ApplyMovement();
         ApplyRotation();
     }
+
+    #endregion
+
+    #region Private Methods
 
     private bool IsAnyMoveInput()
     {
@@ -55,9 +75,13 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyMovement()
     {
         if (IsAnyMoveInput())
+        {
             movementConfiguration.Accelerate();
+        }
         else
+        {
             movementConfiguration.Decelerate();
+        }
 
         playerRigidbody.velocity = directionToMove * movementConfiguration.CurrentSpeed;
     }
@@ -73,4 +97,6 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
     }
+
+    #endregion
 }
