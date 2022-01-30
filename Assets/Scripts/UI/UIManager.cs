@@ -25,12 +25,14 @@ public class UIManager : MonoBehaviour
 
     public void ShowMenu()
     {
+        Time.timeScale = 0f;
         menuVisible = true;
         menuPanel.SetActive(true);
     }
 
     public void CloseMenu()
     {
+        Time.timeScale = 1f;
         menuVisible = false;
         menuPanel.SetActive(false);
     }

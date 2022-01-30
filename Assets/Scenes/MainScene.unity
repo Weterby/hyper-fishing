@@ -8264,7 +8264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 1655237652209812165, guid: 97c7cb97a539c3142b9475de1e697a9c, type: 3}
   flockBehaviour: {fileID: 11400000, guid: 510786622c779464889bd1a3c6a4ca76, type: 2}
-  startingCount: 200
+  startingCount: 100
   driveFactor: 10
   maxSpeed: 5
   neighbourRadius: 1.5
@@ -10596,7 +10596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 4033766743141924268, guid: 90cd48a7a0604074cbbede0d53801e03, type: 3}
   flockBehaviour: {fileID: 11400000, guid: 510786622c779464889bd1a3c6a4ca76, type: 2}
-  startingCount: 200
+  startingCount: 100
   driveFactor: 10
   maxSpeed: 5
   neighbourRadius: 1.5
@@ -11496,7 +11496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 3674835200103438610, guid: 6fd6b19e28ef5bd44819312bec7e951d, type: 3}
   flockBehaviour: {fileID: 11400000, guid: 510786622c779464889bd1a3c6a4ca76, type: 2}
-  startingCount: 200
+  startingCount: 100
   driveFactor: 10
   maxSpeed: 5
   neighbourRadius: 1.5
@@ -13797,7 +13797,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1922463681
 MonoBehaviour:
   m_ObjectHideFlags: 0
