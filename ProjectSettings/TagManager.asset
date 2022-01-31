@@ -42,6 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Obstacle
+    uniqueID: 3376591357
+    locked: 0
+  - name: Green
+    uniqueID: 941798339
+    locked: 0
   - name: Boat
     uniqueID: 2489367047
     locked: 0
